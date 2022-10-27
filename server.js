@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import userRouter from "./routes/authenticationRoute.js";
+import productRouter from "./routes/productRoute.js";
 
 dotenv.config();
 
@@ -26,5 +27,6 @@ try {
 }
 
 app.use("/api/user", userRouter);
+app.use("/api/product", productRouter);
 
 app.listen(port, () => console.log(`Server run on port : ${port}`));
