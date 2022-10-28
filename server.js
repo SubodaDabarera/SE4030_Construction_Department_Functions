@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import userRouter from "./routes/authenticationRoute.js";
 import productRouter from "./routes/productRoute.js";
-import supplierRouter from "./routes/supplierRoute";
+import supplierRouter from "./routes/supplierRoute.js";
 dotenv.config();
 
 const port = process.env.PORT || 8000;
