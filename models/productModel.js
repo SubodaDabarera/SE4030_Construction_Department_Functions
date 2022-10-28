@@ -23,7 +23,7 @@ const productSchema = mongoose.Schema({
   },
   description: {
     type: String,
-    required: constfalse,
+    required: false,
   },
 });
 
