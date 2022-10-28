@@ -1,4 +1,4 @@
-import supplierModel from "../models/supplierModel";
+import supplierModel from "../models/supplierModel.js";
 
 export const addSupplier = async (req, res) => {
   const { name, email, address, telephone } = req.body;
