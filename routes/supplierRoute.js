@@ -5,7 +5,7 @@ import {
   getSuppliers,
   deleteSupplier,
   updateSupplierById,
-} from "../controllers/supplierController";
+} from "../controllers/supplierController.js";
 
 var supplierRouter = express.Router();
 
