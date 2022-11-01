@@ -58,3 +58,21 @@ export const getOrderById = async (req, res) => {
       res.json(err);
     });
 };
+
+export const updateOrderById = async (req, res) => {
+  const { orderId, status } = req.body;
+
+  const updateOrder = {
+    status,
+  };
+
+  orderModel
+    .findByIdAndUpdate(orderId, updateOrder)
+    .then(() => {
+      res.status(200).send({ status: "Order status updated" });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json(err);
+    });
+};
