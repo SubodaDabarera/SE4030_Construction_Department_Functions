@@ -26,6 +26,10 @@ const orderSchema = mongoose.Schema(
       type: String,
       default: "pending"
     },
+    totalAmount: {
+      type: Number,
+      required: [true, "please enter total amount"],
+    }
   },
   {
     timestamps: true,
