@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import userRouter from "./routes/authenticationRoute.js";
 import productRouter from "./routes/productRoute.js";
 import supplierRouter from "./routes/supplierRoute.js";
+import orderRouter from "./routes/orderRoute.js";
 dotenv.config();
 
 const port = process.env.PORT || 8000;
@@ -28,6 +29,7 @@ try {
 
 app.use("/api/user", userRouter);
 app.use("/api/product", productRouter);
-app.use("api/supplier", supplierRouter);
+app.use("/api/supplier", supplierRouter);
+app.use("/api/order", orderRouter)
 
 app.listen(port, () => console.log(`Server run on port : ${port}`));
