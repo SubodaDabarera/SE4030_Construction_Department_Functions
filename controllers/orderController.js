@@ -1,7 +1,7 @@
 import orderModel from "../models/orderModel.js";
 
 export const placeOrder = async (req, res) => {
-  const { ownerId, siteManager, productId, unitPrice, quantity } = req.body;
+  const { ownerId, siteManager, productId, unitPrice, quantity, totalAmount } = req.body;
   try {
     const newOrder = await orderModel.create({
       ownerId,
@@ -9,6 +9,7 @@ export const placeOrder = async (req, res) => {
       productId,
       unitPrice,
       quantity,
+      totalAmount
     });
     return res.status(201).json({ success: true, Product: newOrder });
   } catch (err) {
@@ -32,9 +33,10 @@ export const getAllOrders = async (req, res) => {
 // get order by site manager's id
 export const getOrderBySM = async (req, res) => {
   const { siteManager } = req.query;
-
+  console.log(siteManager)
+  console.log("Orders SM")
   orderModel
-    .find({ siteManager: siteManager })
+    .find({ siteManager })
     .then((orders) => {
       res.json({ success: true, orders: orders });
     })
