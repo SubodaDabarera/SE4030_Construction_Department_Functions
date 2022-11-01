@@ -1,10 +1,12 @@
 import orderModel from "../models/orderModel.js";
 
 export const placeOrder = async (req, res) => {
-  const { ownerId, siteManager, productId, unitPrice, quantity, totalAmount } = req.body;
+  const { ownerId, owner, title, siteManager, productId, unitPrice, quantity, totalAmount } = req.body;
   try {
     const newOrder = await orderModel.create({
       ownerId,
+      owner,
+      title,
       siteManager,
       productId,
       unitPrice,
@@ -34,7 +36,6 @@ export const getAllOrders = async (req, res) => {
 export const getOrderBySM = async (req, res) => {
   const { siteManager } = req.query;
   console.log(siteManager)
-  console.log("Orders SM")
   orderModel.find({ siteManager: siteManager }).then((orders) => {
       res.json({ success: true, orders: orders });
     })
