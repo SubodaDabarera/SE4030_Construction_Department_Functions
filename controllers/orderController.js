@@ -35,9 +35,7 @@ export const getOrderBySM = async (req, res) => {
   const { siteManager } = req.query;
   console.log(siteManager)
   console.log("Orders SM")
-  orderModel
-    .find({ siteManager })
-    .then((orders) => {
+  orderModel.find({ siteManager: siteManager }).then((orders) => {
       res.json({ success: true, orders: orders });
     })
     .catch((err) => {
