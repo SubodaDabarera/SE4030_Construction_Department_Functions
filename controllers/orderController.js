@@ -125,7 +125,8 @@ export const updateOrderQty = async (req, res) => {
 };
 
 export const deleteOrder = async (req, res) => {
-  const { orderId } = req.body;
+  // const { orderId } = req.body;
+  const {orderId} = req.query
 
   orderModel
     .findByIdAndDelete(orderId)
