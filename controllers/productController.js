@@ -38,7 +38,7 @@ export const getOneProduct = async (req, res) => {
   const productId = req.params.productId;
 
   productModel
-    .findByID({ _id: productId })
+    .findById({ _id: productId })
     .then((product) => {
       res.json({ success: true, existingProduct: product });
     })
