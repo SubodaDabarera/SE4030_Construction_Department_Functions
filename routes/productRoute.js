@@ -13,6 +13,6 @@ productRouter.post("/add-product", addProduct);
 productRouter.get("/", getProducts);
 productRouter.get("/:productId", getOneProduct);
 productRouter.delete("/:productId", deleteProduct);
-productRouter.put("update/:productId", updateProductById);
+productRouter.put("/update/:productId", updateProductById);
 
 export default productRouter;
