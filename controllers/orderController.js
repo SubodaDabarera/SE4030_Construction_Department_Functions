@@ -1,7 +1,16 @@
 import orderModel from "../models/orderModel.js";
 
 export const placeOrder = async (req, res) => {
-  const { ownerId, owner, title, siteManager, productId, unitPrice, quantity, totalAmount } = req.body;
+  const {
+    ownerId,
+    owner,
+    title,
+    siteManager,
+    productId,
+    unitPrice,
+    quantity,
+    totalAmount,
+  } = req.body;
   try {
     const newOrder = await orderModel.create({
       ownerId,
@@ -11,7 +20,7 @@ export const placeOrder = async (req, res) => {
       productId,
       unitPrice,
       quantity,
-      totalAmount
+      totalAmount,
     });
     return res.status(201).json({ success: true, Product: newOrder });
   } catch (err) {
@@ -35,7 +44,7 @@ export const getAllOrders = async (req, res) => {
 // get orders which are in pending state
 export const getAllOrdersByStatus = async (req, res) => {
   orderModel
-    .find({status: "pending"})
+    .find({ status: "pending" })
     .then((orders) => {
       res.json({ success: true, orders: orders });
     })
@@ -48,8 +57,10 @@ export const getAllOrdersByStatus = async (req, res) => {
 // get order by site manager's id
 export const getOrderBySM = async (req, res) => {
   const { siteManager } = req.query;
-  console.log(siteManager)
-  orderModel.find({siteManager}).then((orders) => {
+  console.log(siteManager);
+  orderModel
+    .find({ siteManager })
+    .then((orders) => {
       res.json({ success: true, orders: orders });
     })
     .catch((err) => {
@@ -75,8 +86,8 @@ export const getOrderById = async (req, res) => {
 
 export const updateOrderById = async (req, res) => {
   // const { orderId, status } = req.body;
-  const {orderId} = req.body.orderId
-  const {updateOrder} = req.body.orderId
+  const { orderId } = req.body.orderId;
+  const { updateOrder } = req.body.orderId;
 
   // console.log(req.body.orderId)
 
@@ -85,9 +96,41 @@ export const updateOrderById = async (req, res) => {
   };
 
   orderModel
-    .findByIdAndUpdate({_id:orderId}, updatedOrder)
+    .findByIdAndUpdate({ _id: orderId }, updatedOrder)
     .then(() => {
       res.status(200).send({ status: "Order status updated" });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json(err);
+    });
+};
+
+export const updateOrderQty = async (req, res) => {
+  const { orderId, quantity } = req.body;
+
+  const updatedOrder = {
+    quantity: quantity,
+  };
+
+  orderModel
+    .findByIdAndUpdate({ _id: orderId }, updatedOrder)
+    .then(() => {
+      res.status(200).send({ status: "Order status updated" });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json(err);
+    });
+};
+
+export const deleteOrder = async (req, res) => {
+  const { orderId } = req.body;
+
+  orderModel
+    .findByIdAndDelete(orderId)
+    .then(() => {
+      res.status(200).send({ status: "Item deleted " });
     })
     .catch((err) => {
       console.log(err);
