@@ -3,6 +3,10 @@ import mongoose from 'mongoose'
 const userSchema = mongoose.Schema({
     email: {
         type: String,
+        required: [true, "please enter email "],
+    },
+    userName: {
+        type: String,
         required: [true, "please enter user name "],
     },
     password: {

@@ -32,6 +32,19 @@ export const getAllOrders = async (req, res) => {
     });
 };
 
+// get orders which are in pending state
+export const getAllOrdersByStatus = async (req, res) => {
+  orderModel
+    .find({status: "pending"})
+    .then((orders) => {
+      res.json({ success: true, orders: orders });
+    })
+    .catch((err) => {
+      res.json(err);
+      console.log(err);
+    });
+};
+
 // get order by site manager's id
 export const getOrderBySM = async (req, res) => {
   const { siteManager } = req.query;
@@ -61,14 +74,18 @@ export const getOrderById = async (req, res) => {
 };
 
 export const updateOrderById = async (req, res) => {
-  const { orderId, status } = req.body;
+  // const { orderId, status } = req.body;
+  const {orderId} = req.body.orderId
+  const {updateOrder} = req.body.orderId
 
-  const updateOrder = {
-    status,
+  // console.log(req.body.orderId)
+
+  const updatedOrder = {
+    status: updateOrder,
   };
 
   orderModel
-    .findByIdAndUpdate(orderId, updateOrder)
+    .findByIdAndUpdate({_id:orderId}, updatedOrder)
     .then(() => {
       res.status(200).send({ status: "Order status updated" });
     })
