@@ -6,6 +6,12 @@ const orderSchema = mongoose.Schema(
       type: String,
       required: [true, "please enter owner id"],
     },
+    owner: {
+      type: String,
+    },
+    title: {
+      type: String,
+    },
     siteManager: {
       type: String,
       required: [true, "please enter site manager's id"],
@@ -24,12 +30,12 @@ const orderSchema = mongoose.Schema(
     },
     status: {
       type: String,
-      default: "pending"
+      default: "pending",
     },
     totalAmount: {
       type: Number,
       required: [true, "please enter total amount"],
-    }
+    },
   },
   {
     timestamps: true,
