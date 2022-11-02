@@ -35,7 +35,7 @@ export const getOneProduct = async (req, res) => {
   const productId = req.params.productId;
 
   productModel
-    .findByID({ _id: productId })
+    .findById({ _id: productId })
     .then((product) => {
       res.json({ success: true, existingProduct: product });
     })
@@ -49,7 +49,7 @@ export const deleteProduct = async (req, res) => {
   const productId = req.params.productId;
 
   productModel
-    .findByIDAndDelete(productId)
+    .findByIdAndDelete(productId)
     .then(() => {
       res.status(200).send({ status: "Item deleted " });
     })
@@ -61,6 +61,8 @@ export const deleteProduct = async (req, res) => {
 
 export const updateProductById = async (req, res) => {
   const productId = req.params.productId;
+
+  console.log(productId);
 
   const { owner, title, unitPrice, quantity, location, description } = req.body;
 
@@ -74,7 +76,7 @@ export const updateProductById = async (req, res) => {
   };
 
   productModel
-    .findByIDAndUpdate(productId, updatedProduct)
+    .findByIdAndUpdate(productId, updatedProduct)
     .then(() => {
       res.status(200).send({ status: "product updated" });
     })
