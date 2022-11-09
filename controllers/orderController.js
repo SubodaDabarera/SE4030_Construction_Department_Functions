@@ -54,6 +54,19 @@ export const getAllOrdersByStatus = async (req, res) => {
     });
 };
 
+// get orders which are assigned to top procurement manager
+export const getTopPMAllRequestedOrders = async (req, res) => {
+  orderModel
+    .find({ status: "topManager" })
+    .then((orders) => {
+      res.json({ success: true, orders: orders });
+    })
+    .catch((err) => {
+      res.json(err);
+      console.log(err);
+    });
+};
+
 // get order by site manager's id
 export const getOrderBySM = async (req, res) => {
   const { siteManager } = req.query;
@@ -111,6 +124,26 @@ export const updateOrderQty = async (req, res) => {
 
   const updatedOrder = {
     quantity: quantity,
+  };
+
+  orderModel
+    .findByIdAndUpdate({ _id: orderId }, updatedOrder)
+    .then(() => {
+      res.status(200).send({ status: "Order status updated" });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json(err);
+    });
+};
+
+// update partial order approved quantity
+export const updatePartialOrderQty = async (req, res) => {
+  const { orderId, partialyApprovedQty, unitPrice } = req.body;
+
+  const updatedOrder = {
+    partialyApprovedQty: partialyApprovedQty,
+    approvedTotalAmount: unitPrice * partialyApprovedQty
   };
 
   orderModel

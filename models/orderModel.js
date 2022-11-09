@@ -32,6 +32,12 @@ const orderSchema = mongoose.Schema(
       type: String,
       default: "pending",
     },
+    partialyApprovedQty: {
+      type: Number,
+    },
+    approvedTotalAmount: {
+      type: Number,
+    },
     totalAmount: {
       type: Number,
       required: [true, "please enter total amount"],
