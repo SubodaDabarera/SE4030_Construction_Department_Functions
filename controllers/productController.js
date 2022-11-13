@@ -1,7 +1,8 @@
 import productModel from "../models/productModel.js";
 
 export const addProduct = async (req, res) => {
-  const { owner, title, unitPrice, quantity, location, description } = req.body;
+  const { owner, title, unitPrice, quantity, location, description, imgUrl } =
+    req.body;
 
   try {
     const newProduct = await productModel.create({
@@ -11,6 +12,7 @@ export const addProduct = async (req, res) => {
       quantity,
       location,
       description,
+      imgUrl,
     });
     return res.status(201).json({ success: true, Product: newProduct });
   } catch (err) {
@@ -20,8 +22,7 @@ export const addProduct = async (req, res) => {
 };
 
 export const getProducts = async (req, res) => {
-
-  console.log("here called")
+  console.log("here called");
 
   productModel
     .find()
