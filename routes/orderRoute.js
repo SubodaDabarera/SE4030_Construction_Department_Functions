@@ -1,6 +1,9 @@
 import express from "express";
 import {
   deleteOrder,
+  getAllApprovedOrders,
+  getAllDeclinedOrders,
+  getAllPendingOrders,
   getAllOrders,
   getAllOrdersByStatus,
   getOrderById,
@@ -25,5 +28,8 @@ orderRouter.put("/update-order-qty", updateOrderQty);
 orderRouter.put("/update-partial-order-qty", updatePartialOrderQty);
 orderRouter.put("/update-deliveryNote-status", updateDeliveryNoteStatus);
 orderRouter.delete("/delete-order", deleteOrder);
+orderRouter.get("/approved-orders", getAllApprovedOrders);
+orderRouter.get("/declined-orders", getAllDeclinedOrders);
+orderRouter.get("/pending-orders", getAllPendingOrders);
 
 export default orderRouter;

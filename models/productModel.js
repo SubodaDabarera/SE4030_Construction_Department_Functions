@@ -25,6 +25,10 @@ const productSchema = mongoose.Schema({
     type: String,
     required: false,
   },
+  imgUrl: {
+    type: String,
+    required: true[(true, "please add image")],
+  },
 });
 
 export default mongoose.model("Product", productSchema);
