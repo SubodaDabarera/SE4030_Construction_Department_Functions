@@ -16,3 +16,18 @@ export const addDeliveryNote = async (req, res) => {
     res.json(err);
   }
 };
+
+// get delivery details by id
+export const getDeliveryByOrderId = async (req, res) => {
+  const { orderId } = req.query;
+
+  deliveryNoteModel
+    .find({orderId})
+    .then((delivery) => {
+      res.json({ success: true, order: delivery });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json(err);
+    });
+};
