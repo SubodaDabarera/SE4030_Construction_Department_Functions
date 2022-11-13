@@ -15,6 +15,34 @@ export const createUser = async (req, res) => {
   }
 };
 
+// sign in
+export const signIn = async (req, res) => {
+  const { email, password } = req.body
+
+  try {
+    const user = await userModel.findOne({ email: email })
+
+    if (user) {
+      if (user.password == password) {
+        return res
+          .status(201)
+          .json({ success: true, user: user, message: 'Login success' })
+      } else {
+        return res
+          .status(500)
+          .json({ success: false, user: null, message: 'Invalid password' })
+      }
+    } else {
+      return res
+        .status(500)
+        .json({ success: false, user: null, message: 'Invalid email' })
+    }
+  } catch (e) {
+    console.log(err)
+    res.json(err)
+  }
+}
+
 export const getUserDetails = async (req, res) => {
   const { userId } = req.query;
 
