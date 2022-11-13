@@ -14,6 +14,8 @@ import {
   updateOrderById,
   updateOrderQty,
   updatePartialOrderQty,
+  getOrderByParmsId,
+  getAllConfiremedOrders,
 } from "../controllers/orderController.js";
 
 var orderRouter = express.Router();
@@ -31,5 +33,7 @@ orderRouter.delete("/delete-order", deleteOrder);
 orderRouter.get("/approved-orders", getAllApprovedOrders);
 orderRouter.get("/declined-orders", getAllDeclinedOrders);
 orderRouter.get("/pending-orders", getAllPendingOrders);
+orderRouter.get("/order-details/:orderId", getOrderByParmsId);
+orderRouter.get("/confirmed-orders", getAllConfiremedOrders);
 
 export default orderRouter;
