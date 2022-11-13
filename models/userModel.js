@@ -16,6 +16,18 @@ const userSchema = mongoose.Schema({
     userRole:{
         type:String,
         required: [false]
+    },
+    projectBudget: {
+        type: Number,
+        required: [true]
+    },
+    totalSpent: {
+        type: Number,
+        default: 0
+    },
+    maxSpent: {
+        type: Number,
+        required: [true]
     }
 })
 export default mongoose.model("User",userSchema);
