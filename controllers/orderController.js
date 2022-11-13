@@ -231,3 +231,31 @@ export const updateDeliveryNoteStatus = async (req, res) => {
       res.json(err);
     });
 };
+
+// get order by params
+export const getOrderByParmsId = async (req, res) => {
+  const orderId = req.params.orderId;
+
+  orderModel
+    .findById(orderId)
+    .then((order) => {
+      res.json({ success: true, order: order });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json(err);
+    });
+};
+
+// get orders which are in pending state
+export const getAllConfiremedOrders = async (req, res) => {
+  orderModel
+    .find({ status: "confirmed" })
+    .then((orders) => {
+      res.json({ success: true, orders: orders });
+    })
+    .catch((err) => {
+      res.json(err);
+      console.log(err);
+    });
+};
