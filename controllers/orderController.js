@@ -143,7 +143,7 @@ export const updatePartialOrderQty = async (req, res) => {
 
   const updatedOrder = {
     partialyApprovedQty: partialyApprovedQty,
-    approvedTotalAmount: unitPrice * partialyApprovedQty
+    approvedTotalAmount: unitPrice * partialyApprovedQty,
   };
 
   orderModel
@@ -159,7 +159,7 @@ export const updatePartialOrderQty = async (req, res) => {
 
 export const deleteOrder = async (req, res) => {
   // const { orderId } = req.body;
-  const {orderId} = req.query
+  const { orderId } = req.query;
 
   orderModel
     .findByIdAndDelete(orderId)
@@ -169,5 +169,44 @@ export const deleteOrder = async (req, res) => {
     .catch((err) => {
       console.log(err);
       res.json(err);
+    });
+};
+
+// get orders which are in approoved state
+export const getAllApprovedOrders = async (req, res) => {
+  orderModel
+    .find({ status: "approved" })
+    .then((orders) => {
+      res.json({ success: true, orders: orders });
+    })
+    .catch((err) => {
+      res.json(err);
+      console.log(err);
+    });
+};
+
+// get orders which are in declined state
+export const getAllDeclinedOrders = async (req, res) => {
+  orderModel
+    .find({ status: "rejected" })
+    .then((orders) => {
+      res.json({ success: true, orders: orders });
+    })
+    .catch((err) => {
+      res.json(err);
+      console.log(err);
+    });
+};
+
+// get orders which are in pending state
+export const getAllPendingOrders = async (req, res) => {
+  orderModel
+    .find({ status: "pending" })
+    .then((orders) => {
+      res.json({ success: true, orders: orders });
+    })
+    .catch((err) => {
+      res.json(err);
+      console.log(err);
     });
 };
