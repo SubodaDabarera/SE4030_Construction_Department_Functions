@@ -11,6 +11,7 @@ export const placeOrder = async (req, res) => {
     unitPrice,
     quantity,
     totalAmount,
+    status
   } = req.body;
   try {
     const newOrder = await orderModel.create({
@@ -23,6 +24,7 @@ export const placeOrder = async (req, res) => {
       unitPrice,
       quantity,
       totalAmount,
+      status
     });
     return res.status(201).json({ success: true, Product: newOrder });
   } catch (err) {
