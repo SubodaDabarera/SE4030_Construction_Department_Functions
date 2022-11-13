@@ -31,7 +31,7 @@ try {
 app.use("/api/user", userRouter);
 app.use("/api/product", productRouter);
 app.use("/api/supplier", supplierRouter);
-app.use("/api/order", orderRouter)
-app.use("/api/deliveryNote", deliveryNoteRouter)
+app.use("/api/order", orderRouter);
+app.use("/api/deliveryNote", deliveryNoteRouter);
 
 app.listen(port, () => console.log(`Server run on port : ${port}`));

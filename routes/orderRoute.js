@@ -3,13 +3,14 @@ import {
   deleteOrder,
   getAllApprovedOrders,
   getAllDeclinedOrders,
+  getAllPendingOrders,
   getAllOrders,
   getAllOrdersByStatus,
-  getAllPendingOrders,
   getOrderById,
   getOrderBySM,
   getTopPMAllRequestedOrders,
   placeOrder,
+  updateDeliveryNoteStatus,
   updateOrderById,
   updateOrderQty,
   updatePartialOrderQty,
@@ -25,6 +26,7 @@ orderRouter.get("/order-details", getOrderById);
 orderRouter.put("/update-order-status", updateOrderById);
 orderRouter.put("/update-order-qty", updateOrderQty);
 orderRouter.put("/update-partial-order-qty", updatePartialOrderQty);
+orderRouter.put("/update-deliveryNote-status", updateDeliveryNoteStatus);
 orderRouter.delete("/delete-order", deleteOrder);
 orderRouter.get("/approved-orders", getAllApprovedOrders);
 orderRouter.get("/declined-orders", getAllDeclinedOrders);
