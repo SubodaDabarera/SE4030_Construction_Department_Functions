@@ -16,6 +16,10 @@ const orderSchema = mongoose.Schema(
       type: String,
       required: [true, "please enter site manager's id"],
     },
+    siteManagerName: {
+      type: String,
+      required: [true, "please enter site manager's Name"],
+    },
     productId: {
       type: String,
       required: [true, "please enter Product id"],
@@ -41,6 +45,10 @@ const orderSchema = mongoose.Schema(
     totalAmount: {
       type: Number,
       required: [true, "please enter total amount"],
+    },
+    deliveryNoteAdded: {
+      type: Boolean,
+      default: false,
     },
   },
   {

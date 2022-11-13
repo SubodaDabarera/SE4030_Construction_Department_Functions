@@ -6,6 +6,7 @@ export const placeOrder = async (req, res) => {
     owner,
     title,
     siteManager,
+    siteManagerName,
     productId,
     unitPrice,
     quantity,
@@ -17,6 +18,7 @@ export const placeOrder = async (req, res) => {
       owner,
       title,
       siteManager,
+      siteManagerName,
       productId,
       unitPrice,
       quantity,
@@ -29,6 +31,8 @@ export const placeOrder = async (req, res) => {
   }
 };
 
+
+// get all orders
 export const getAllOrders = async (req, res) => {
   orderModel
     .find()
@@ -102,8 +106,6 @@ export const updateOrderById = async (req, res) => {
   const { orderId } = req.body.orderId;
   const { updateOrder } = req.body.orderId;
 
-  // console.log(req.body.orderId)
-
   const updatedOrder = {
     status: updateOrder,
   };
@@ -119,6 +121,7 @@ export const updateOrderById = async (req, res) => {
     });
 };
 
+// update the quantity of order
 export const updateOrderQty = async (req, res) => {
   const { orderId, quantity } = req.body;
 
@@ -143,7 +146,7 @@ export const updatePartialOrderQty = async (req, res) => {
 
   const updatedOrder = {
     partialyApprovedQty: partialyApprovedQty,
-    approvedTotalAmount: unitPrice * partialyApprovedQty
+    approvedTotalAmount: unitPrice * partialyApprovedQty,
   };
 
   orderModel
@@ -157,14 +160,33 @@ export const updatePartialOrderQty = async (req, res) => {
     });
 };
 
+// delete orders
 export const deleteOrder = async (req, res) => {
-  // const { orderId } = req.body;
-  const {orderId} = req.query
+  const { orderId } = req.query;
 
   orderModel
     .findByIdAndDelete(orderId)
     .then(() => {
       res.status(200).send({ status: "Item deleted " });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json(err);
+    });
+};
+
+// update delivery note added status
+export const updateDeliveryNoteStatus = async (req, res) => {
+  const { orderId, status } = req.body;
+
+  const updatedOrder = {
+    deliveryNoteAdded: status,
+  };
+
+  orderModel
+    .findByIdAndUpdate({ _id: orderId }, updatedOrder)
+    .then(() => {
+      res.status(200).send({ status: "Order status updated" });
     })
     .catch((err) => {
       console.log(err);
