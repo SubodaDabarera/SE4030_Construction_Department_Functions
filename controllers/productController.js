@@ -22,7 +22,6 @@ export const addProduct = async (req, res) => {
 };
 
 export const getProducts = async (req, res) => {
-  console.log("here called");
 
   productModel
     .find()
