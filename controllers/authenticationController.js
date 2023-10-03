@@ -1,11 +1,28 @@
 import userModel from "../models/userModel.js";
+import bcrypt from "bcrypt";
+import { emailRegex, passwordRegex } from "../utill/regrex.js";
 
 export const createUser = async (req, res) => {
   const { email, password, userRole } = req.body;
+
+  // Validate email and password using regular expressions
+  if (!emailRegex.test(email)) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Invalid email address" });
+  }
+
+  if (!passwordRegex.test(password)) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Invalid password" });
+  }
+
   try {
+    const hashedPassword = await bcrypt.hash(password, 7);
     const user = await userModel.create({
       email,
-      password,
+      password: hashedPassword,
       userRole,
     });
     return res.status(201).json({ success: true, user: user });
@@ -17,31 +34,31 @@ export const createUser = async (req, res) => {
 
 // sign in
 export const signIn = async (req, res) => {
-  const { email, password } = req.body
+  const { email, password } = req.body;
 
   try {
-    const user = await userModel.findOne({ email: email })
+    const user = await userModel.findOne({ email: email });
 
     if (user) {
       if (user.password == password) {
         return res
           .status(201)
-          .json({ success: true, user: user, message: 'Login success' })
+          .json({ success: true, user: user, message: "Login success" });
       } else {
         return res
           .status(500)
-          .json({ success: false, user: null, message: 'Invalid password' })
+          .json({ success: false, user: null, message: "Invalid password" });
       }
     } else {
       return res
         .status(500)
-        .json({ success: false, user: null, message: 'Invalid email' })
+        .json({ success: false, user: null, message: "Invalid email" });
     }
   } catch (e) {
-    console.log(err)
-    res.json(err)
+    console.log(err);
+    res.json(err);
   }
-}
+};
 
 export const getUserDetails = async (req, res) => {
   const { userId } = req.query;
@@ -99,12 +116,10 @@ export const decrement_SM_totalSpent = async (req, res) => {
         { totalSpent: previousTotal - amount }
       )
       .then(() => {
-        res
-          .status(200)
-          .send({
-            status: "Site manager total spent decreased",
-            success: true,
-          });
+        res.status(200).send({
+          status: "Site manager total spent decreased",
+          success: true,
+        });
       })
       .catch((err) => {
         console.log(err);
