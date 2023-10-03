@@ -17,23 +17,24 @@ import {
   getOrderByParmsId,
   getAllConfiremedOrders,
 } from "../controllers/orderController.js";
+import verifyUser from "../middleware/authMiddleware.js";
 
 var orderRouter = express.Router();
-orderRouter.post("/place-order", placeOrder);
-orderRouter.get("/", getAllOrders);
-orderRouter.get("/by-order-status", getAllOrdersByStatus);
-orderRouter.get("/by-topPM-order-status", getTopPMAllRequestedOrders);
-orderRouter.get("/sm-order-details", getOrderBySM);
-orderRouter.get("/order-details", getOrderById);
-orderRouter.put("/update-order-status", updateOrderById);
-orderRouter.put("/update-order-qty", updateOrderQty);
-orderRouter.put("/update-partial-order-qty", updatePartialOrderQty);
-orderRouter.put("/update-deliveryNote-status", updateDeliveryNoteStatus);
-orderRouter.delete("/delete-order", deleteOrder);
-orderRouter.get("/approved-orders", getAllApprovedOrders);
-orderRouter.get("/declined-orders", getAllDeclinedOrders);
-orderRouter.get("/pending-orders", getAllPendingOrders);
-orderRouter.get("/order-details/:orderId", getOrderByParmsId);
-orderRouter.get("/confirmed-orders", getAllConfiremedOrders);
+orderRouter.post("/place-order",verifyUser, placeOrder);
+orderRouter.get("/",verifyUser, getAllOrders);
+orderRouter.get("/by-order-status", verifyUser, getAllOrdersByStatus);
+orderRouter.get("/by-topPM-order-status", verifyUser, getTopPMAllRequestedOrders);
+orderRouter.get("/sm-order-details", verifyUser, getOrderBySM);
+orderRouter.get("/order-details", verifyUser, getOrderById);
+orderRouter.put("/update-order-status", verifyUser, updateOrderById);
+orderRouter.put("/update-order-qty", verifyUser, updateOrderQty);
+orderRouter.put("/update-partial-order-qty", verifyUser, updatePartialOrderQty);
+orderRouter.put("/update-deliveryNote-status", verifyUser, updateDeliveryNoteStatus);
+orderRouter.delete("/delete-order", verifyUser, deleteOrder);
+orderRouter.get("/approved-orders", verifyUser, getAllApprovedOrders);
+orderRouter.get("/declined-orders", verifyUser, getAllDeclinedOrders);
+orderRouter.get("/pending-orders", verifyUser, getAllPendingOrders);
+orderRouter.get("/order-details/:orderId", verifyUser, getOrderByParmsId);
+orderRouter.get("/confirmed-orders", verifyUser, getAllConfiremedOrders);
 
 export default orderRouter;

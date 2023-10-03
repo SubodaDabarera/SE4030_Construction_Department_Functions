@@ -16,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 try {
+  mongoose.set('strictQuery', true)
   const conn = await mongoose.connect(process.env.MONGO_URI);
 
   console.log(`MongoDB connected successfully : ${conn.connection.host}`);
