@@ -28,7 +28,7 @@ export const getProducts = async (req, res) => {
     .then((products) => {
       logger.info("All product details were retrieved");
       if (products.length === 0) {
-        logger.info(
+        logger.warning(
           "No products were found, Num of products : ",
           products.length
         );
@@ -50,7 +50,7 @@ export const getOneProduct = async (req, res) => {
     .then((product) => {
       logger.info("Product retrieved");
       if (!product) {
-        logger.info("No product in the database");
+        logger.warning("No product in the database");
       }
       res.json({ success: true, existingProduct: product });
     })
