@@ -6,14 +6,24 @@ import {
   deleteProduct,
   updateProductById,
 } from "../controllers/productController.js";
-import verifyUser from "../middleware/authMiddleware.js";
+import { checkAccessLevel, verifyUser } from "../middleware/authMiddleware.js";
 
 var productRouter = express.Router();
 
-productRouter.post("/add-product", verifyUser, addProduct);
-productRouter.get("/", verifyUser, getProducts);
-productRouter.get("/:productId", verifyUser, getOneProduct);
-productRouter.delete("/:productId", verifyUser, deleteProduct);
-productRouter.put("/update/:productId", verifyUser, updateProductById);
+productRouter.post("/add-product", verifyUser, checkAccessLevel, addProduct);
+productRouter.get("/", verifyUser, checkAccessLevel, getProducts);
+productRouter.get("/:productId", verifyUser, checkAccessLevel, getOneProduct);
+productRouter.delete(
+  "/:productId",
+  verifyUser,
+  checkAccessLevel,
+  deleteProduct
+);
+productRouter.put(
+  "/update/:productId",
+  verifyUser,
+  checkAccessLevel,
+  updateProductById
+);
 
 export default productRouter;
