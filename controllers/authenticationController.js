@@ -1,11 +1,14 @@
 import userModel from "../models/userModel.js";
+import bcrypt from "bcrypt";
 
 export const createUser = async (req, res) => {
   const { email, password, userRole } = req.body;
+
   try {
+    const hashedPassword = await bcrypt.hash(password, 7);
     const user = await userModel.create({
       email,
-      password,
+      password: hashedPassword,
       userRole,
     });
     return res.status(201).json({ success: true, user: user });
@@ -17,31 +20,31 @@ export const createUser = async (req, res) => {
 
 // sign in
 export const signIn = async (req, res) => {
-  const { email, password } = req.body
+  const { email, password } = req.body;
 
   try {
-    const user = await userModel.findOne({ email: email })
+    const user = await userModel.findOne({ email: email });
 
     if (user) {
-      if (user.password == password) {
+      if (bcrypt.compareSync(password, user.password) === true) {
         return res
           .status(201)
-          .json({ success: true, user: user, message: 'Login success' })
+          .json({ success: true, user: user, message: "Login success" });
       } else {
         return res
           .status(500)
-          .json({ success: false, user: null, message: 'Invalid password' })
+          .json({ success: false, user: null, message: "Login unsuccess" });
       }
     } else {
       return res
         .status(500)
-        .json({ success: false, user: null, message: 'Invalid email' })
+        .json({ success: false, user: null, message: "Login unsuccess" });
     }
   } catch (e) {
-    console.log(err)
-    res.json(err)
+    console.log(err);
+    res.json(err);
   }
-}
+};
 
 export const getUserDetails = async (req, res) => {
   const { userId } = req.query;
@@ -99,12 +102,10 @@ export const decrement_SM_totalSpent = async (req, res) => {
         { totalSpent: previousTotal - amount }
       )
       .then(() => {
-        res
-          .status(200)
-          .send({
-            status: "Site manager total spent decreased",
-            success: true,
-          });
+        res.status(200).send({
+          status: "Site manager total spent decreased",
+          success: true,
+        });
       })
       .catch((err) => {
         console.log(err);
