@@ -1,8 +1,22 @@
 import userModel from "../models/userModel.js";
 import bcrypt from "bcrypt";
+import { emailRegex, passwordRegex } from "../utill/regrex.js";
 
 export const createUser = async (req, res) => {
   const { email, password, userRole } = req.body;
+
+  // Validate email and password using regular expressions
+  if (!emailRegex.test(email)) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Invalid email address" });
+  }
+
+  if (!passwordRegex.test(password)) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Invalid password" });
+  }
 
   try {
     const hashedPassword = await bcrypt.hash(password, 7);
@@ -33,12 +47,12 @@ export const signIn = async (req, res) => {
       } else {
         return res
           .status(500)
-          .json({ success: false, user: null, message: "Login unsuccess" });
+          .json({ success: false, user: null, message: "Invalid password" });
       }
     } else {
       return res
         .status(500)
-        .json({ success: false, user: null, message: "Login unsuccess" });
+        .json({ success: false, user: null, message: "Invalid email" });
     }
   } catch (e) {
     console.log(err);
