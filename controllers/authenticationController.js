@@ -40,7 +40,7 @@ export const signIn = async (req, res) => {
     const user = await userModel.findOne({ email: email });
 
     if (user) {
-      if (user.password == password) {
+      if (bcrypt.compareSync(password, user.password) === true) {
         return res
           .status(201)
           .json({ success: true, user: user, message: "Login success" });
